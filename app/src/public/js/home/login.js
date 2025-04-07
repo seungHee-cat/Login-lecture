@@ -10,4 +10,15 @@ loginBtn.addEventListener("click", () => {
     id: id.value,
     psword: psword.value
   };
+  console.log(req);
+  console.log(JSON.stringify(req));
+
+  // 프론트에서 서버로 데이터 보내기
+  fetch("/login", {
+    method: "POST",
+    header: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(req) // req(Obejct)를 JSON형태로 변환
+  })
 });
