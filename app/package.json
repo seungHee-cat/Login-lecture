@@ -21,7 +21,7 @@
     "concat-map": "^0.0.1",
     "content-disposition": "^1.0.0",
     "content-type": "^1.0.5",
-    "cookie": "^0.7.2", 
+    "cookie": "^0.7.2",
     "cookie-signature": "^1.2.2",
     "debug": "^4.4.0",
     "depd": "^2.0.0",
@@ -87,9 +87,8 @@
     "vary": "^1.1.2",
     "wrappy": "^1.0.2"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "node ./bin/www.js",
+    "start": "nodemon ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
