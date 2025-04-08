@@ -22,7 +22,17 @@ loginBtn.addEventListener("click", () => {
     body: JSON.stringify(req) // req(Obejct)를 JSON형태로 변환
   })
     .then((res) => res.json())
-    .then(console.log); // 파라미터로 넘기는 값을 함수안에 넘길때는 문법 생략 가능
+    .then((res) => {
+      if(res.success){
+        location.href = "/";
+      } else {
+        alert(res.msg);
+      }
+    })
+    .catch( (err) => { 
+      console.error("로그인 중 에러 발생");
+    });
+    // .then(console.log); // 파라미터로 넘기는 값을 함수안에 넘길때는 문법 생략 가능
 
   /*
     res.json()의 반환 값은 Promise
