@@ -14,7 +14,7 @@ class UserStorage {
     /*
       reduce = 반복문
       newUsers에는 fields라는 배열의 초기값이 들어가고
-      그 다음 변수는  field에 들어옴
+      그 다음 변수는 field에 들어옴
     */
     const newUsers = fields.reduce((newUsers, field) => {
       if (users.hasOwnProperty(field)){ // users에 해당하는 키값이 있는지 확인
@@ -23,6 +23,19 @@ class UserStorage {
       return newUsers;
     }, {});
     return newUsers;
+  }
+
+  static getUserInfo(id) {
+    const users = this.#users;
+    const idx = users.id.indexOf(id);
+    const userKeys = Object.keys(users); // => [id, psword, name]
+
+    const userInfo = userKeys.reduce((newUser, info) => {
+      newUser[info] = users[info][idx];
+      return newUser;
+    }, {});
+
+    return userInfo;
   }
 }
 
