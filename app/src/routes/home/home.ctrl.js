@@ -16,9 +16,9 @@ const output = {
 
 const process = {
   // input에서 입력-버튼 눌렀을 때 받아온 데이터 = req
-  login: (req, res) => {
+  login: async (req, res) => {
     const user = new User(req.body);
-    const response = user.login();
+    const response = await user.login();
     return res.json(response);
   },
   register: (req, res) => {

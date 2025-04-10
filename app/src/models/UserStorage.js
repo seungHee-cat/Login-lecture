@@ -1,16 +1,29 @@
 "use strict";
 
+/* 
+  fs(File System)에서 Promise를 제공하고 있음
+  Promise = 약속이라는 의미로 수행하는 동작이 끝남과 동시에
+  상태를 알려주기 때문에 비동기 처리에 아주 효과적이다.
+*/
+const fs = require("fs").promises;
+
 class UserStorage {
-  // 클래스 변수 따로 안만들고 static으로 바로 users에 접근
-  // 하지만 원래는 #을 붙여 은닉화시켜주는게 맞음
-  static #users = {
-    id: ["김팀장", "나대리", "user123"],
-    psword: ["1234", "1234", "1234"],
-    name: ["김동길", "나동길", "다동길"]
-  };
+  // private한 변수, 메서드는 최상단에 두는 것이 convention
+  static #getUserInfo(data, id){
+    const users = JSON.parse(data);
+    const idx = users.id.indexOf(id);
+    const userKeys = Object.keys(users); // => [id, psword, name]
+
+    const userInfo = userKeys.reduce((newUser, info) => {
+      newUser[info] = users[info][idx];
+      return newUser;
+    }, {});
+    
+    return userInfo;
+  }
 
   static getUsers(...fields){
-    const users = this.#users;
+    // const users = this.#users;
     /*
       reduce = 반복문
       newUsers에는 fields라는 배열의 초기값이 들어가고
@@ -26,20 +39,16 @@ class UserStorage {
   }
 
   static getUserInfo(id) {
-    const users = this.#users;
-    const idx = users.id.indexOf(id);
-    const userKeys = Object.keys(users); // => [id, psword, name]
+    return fs.readFile("./src/databases/users.json") // Promise 반환
+    .then((data) => {
+      return this.#getUserInfo(data, id);
+    })
+    .catch(console.error);
 
-    const userInfo = userKeys.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
-    }, {});
-
-    return userInfo;
   }
 
   static save(userInfo){
-    const users = this.#users;
+    // const users = this.#users;
     users.id.push(userInfo.id);
     users.name.push(userInfo.name);
     users.psword.push(userInfo.psword);
